@@ -1,38 +1,40 @@
-//your JS code here. If required.
-const form = document.getElementById("login-form");
+const form = document.querySelector("form");
+
 const username = document.getElementById("username");
 const password = document.getElementById("password");
 const checkbox = document.getElementById("checkbox");
+const submit = document.getElementById("submit");
 const existing = document.getElementById("existing");
 
 
-// Check if credentials already exist
-window.addEventListener("load", function () {
+// Hide existing user button initially
+existing.style.display = "none";
 
+
+// Check localStorage when page loads
+function checkExistingUser() {
     const savedUsername = localStorage.getItem("username");
     const savedPassword = localStorage.getItem("password");
 
     if (savedUsername && savedPassword) {
         existing.style.display = "block";
     }
+}
 
-});
+checkExistingUser();
 
 
-// Login form submission
+// Form submission
 form.addEventListener("submit", function (event) {
 
     event.preventDefault();
 
-    const user = username.value;
-    const pass = password.value;
-
-    alert("Logged in as " + user);
+    alert("Logged in as " + username.value);
 
     if (checkbox.checked) {
 
-        localStorage.setItem("username", user);
-        localStorage.setItem("password", pass);
+        localStorage.setItem("username", username.value);
+        localStorage.setItem("password", password.value);
 
         existing.style.display = "block";
 
@@ -43,17 +45,14 @@ form.addEventListener("submit", function (event) {
 
         existing.style.display = "none";
     }
-
 });
 
 
-// Login as existing user
+// Existing user login
 existing.addEventListener("click", function () {
 
-    const savedUsername = localStorage.getItem("username");
-
-    if (savedUsername) {
-        alert("Logged in as " + savedUsername);
-    }
+    alert(
+        "Logged in as " + localStorage.getItem("username")
+    );
 
 });
